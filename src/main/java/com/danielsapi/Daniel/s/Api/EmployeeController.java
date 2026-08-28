@@ -46,11 +46,11 @@ public class EmployeeController {
     }
 
     @DeleteMapping("/employee/{id}")
-    public ResponseEntity deleteEmployeeID(@PathVariable long id){
+    public ResponseEntity deleteEmployeeByID(@PathVariable long id){
         return repository.findById(id).map(employee -> {repository.deleteById(id);
                     return ResponseEntity.status(204).build();
         })
-        return ResponseEntity.status(404).build();
+                .orElseGet(() -> ResponseEntity.status(404).build());
     }
 
 }
