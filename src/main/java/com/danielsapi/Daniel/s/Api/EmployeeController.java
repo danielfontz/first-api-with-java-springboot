@@ -1,6 +1,7 @@
 package com.danielsapi.Daniel.s.Api;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -45,8 +46,11 @@ public class EmployeeController {
     }
 
     @DeleteMapping("/employee/{id}")
-    public void deleteEmployeeID(@PathVariable long id){
-        repository.deleteById(id);
+    public ResponseEntity deleteEmployeeID(@PathVariable long id){
+        return repository.findById(id).map(employee -> {repository.deleteById(id);
+                    return ResponseEntity.status(204).build();
+        })
+        return ResponseEntity.status(404).build();
     }
 
 }
